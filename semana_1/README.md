@@ -39,7 +39,7 @@ docker run --name cloudbeaver --rm -ti -p 8080:8978 \
    dbeaver/cloudbeaver:latest
 ```
 
-Para configuração da conexão do Beaver com o MSSQL foi utilizado o IP da maquina host, isto considerando que o dns `localhost` da conteiner do Beaver redireciona para o IP do container, e ainda o IP do host é trocado com menor frequências.
+Para configuração da conexão do Beaver com o MSSQL foi utilizado o IP da maquina host, isto considerando que o dns `localhost` da conteiner do Beaver redireciona para o IP do container, e ainda o IP do host é trocado com menor frequência.
 
 ![Configuração da conexão do Cloud Beaver com o MSSQL](./imagens/dbeaver_mssql_config.png)
 
@@ -70,19 +70,19 @@ Durante a aula, o projeto foi criado com o template `Aplicação Web Asp.Net (.N
 
 ### Criação de modelos de entidades a partir do banco de dados criado
 
-Para utilização do `dotnet ef` (Entity Framework CLI) que é responsável pela criação dos modelos de entidades, é necessário a instalação do mesmo. O seguinte comando é utilizado para a instalação desta ferramenta:
+Para utilização do `dotnet ef` (Entity Framework CLI) que é responsável pela criação dos modelos de entidades, foi necessário a instalação do mesmo. O seguinte comando é utilizado para a instalação desta ferramenta:
 
 ```
 dotnet tool install --global dotnet-ef
 ```
 
-O seguinte comando, aqui ajustado para o ambiente de desenvolvimento dentro do container, é necessário para indicar o caminho das ferramentas instaladas:
+O seguinte comando, aqui ajustado para o ambiente de desenvolvimento dentro do container, foi necessário para indicar o caminho das ferramentas instaladas:
 
 ```
 export PATH="$PATH:/home/vscode/.dotnet/tools"
 ```
 
-Ainda, é necessário adicionar os seguintes pacotes:
+Ainda, foi necessário adicionar os seguintes pacotes:
 
 ```
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
@@ -90,7 +90,7 @@ dotnet add package Microsoft.EntityFrameworkCore.SqlServer.Design
 dotnet add package Microsoft.EntityFrameworkCore.Tools
 ```
 
-Antes de criar os modelos, devemos configurar uma string com as informações de conexão a base de dados conforme comandos abaixo:
+Antes de criar os modelos, configurei uma string com as informações de conexão a base de dados conforme comandos abaixo:
 
 ```
 dotnet user-secrets init
@@ -99,7 +99,7 @@ dotnet user-secrets set ConnectionStrings:DefaultConnection "Server=192.168.100.
 
 Considerando que o projeto é executado dentro de um container, para o endereço do SGDB foi utilizado o IP da máquina host, para o qual o serviço do MSSQL foi mapeado. 
 
-A partir deste ponto, podemos gerar os modelos de entidades a partir do banco de dados existente com o seguinte comando:
+A partir deste ponto, foi possível gerar os modelos de entidades a partir do banco de dados existente com o seguinte comando:
 
 ```
 dotnet ef dbcontext \
@@ -110,7 +110,7 @@ dotnet ef dbcontext \
 ![Modelos de entidade](./imagens/vscode_models.png)
 
 
-Em seguinda, podemos configurar serviço para o contexto de dados, adicionando a seguinte linha ao arquivo Program.cs:
+Em seguinda, adicionei a configuração de serviço para o contexto de dados, adicionando a seguinte linha ao arquivo Program.cs:
 
 ```
 builder.Services.AddDbContext<DbIfContext>(options => options.UseSqlServer("Name=ConnectionStrings:DefaultConnection"));
@@ -118,14 +118,14 @@ builder.Services.AddDbContext<DbIfContext>(options => options.UseSqlServer("Name
 
 ### Criação de um controlador (e views) a partir de um modelo de entidade escolhido dentre os criados
 
-De forma análoga ao `dotnet ef`, para gerar os controladores e views, precisamos de adicionar a ferramenta `aspnet-codegenerator`. Podemos utilizar o seguinte comando do dotnet para instalar esta ferramenta:
+De forma análoga ao `dotnet ef`, para gerar os controladores e views, precisamos de adicionar a ferramenta `aspnet-codegenerator`. Utilizei o seguinte comando do dotnet para instalar esta ferramenta:
 
 
 ```
 dotnet tool install -g dotnet-aspnet-codegenerator
 ```
 
-Ainda, é necessário adicionar os seguintes pacotes:
+Ainda, foi necessário adicionar os seguintes pacotes:
 
 
 ```
@@ -133,13 +133,13 @@ dotnet add package Microsoft.VisualStudio.Web.CodeGenerators.Mvc
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 ```
 
-A fim de gerando o controlador e views para o modelo TbAlimento, executamos o seguinte comando:
+A fim de gerando o controlador e views para o modelo TbAlimento, executei o seguinte comando:
 
 ```
 dotnet aspnet-codegenerator controller -name AlimentoController -m TbAlimento -dc DbIfContext --relativeFolderPath Controllers --useDefaultLayout
 ```
 
-O servidor web pode ser inicializado com o seguinte comando:
+Inicializei o sevidor web com o seguinte comando:
 
 ```
 dotnet watch
