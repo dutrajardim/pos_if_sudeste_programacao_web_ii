@@ -94,7 +94,8 @@ Antes de criar os modelos, configurei uma string com as informações de conexã
 
 ```
 dotnet user-secrets init
-dotnet user-secrets set ConnectionStrings:DefaultConnection "Server=192.168.100.65;Database=db_IF;User=SA;Password=YourStrong@Passw0rd;Trusted_Connection=False;TrustServerCertificate=True"
+dotnet user-secrets set ConnectionStrings:DefaultConnection \
+   "Server=192.168.100.65;Database=db_IF;User=SA;Password=YourStrong@Passw0rd;Trusted_Connection=False;TrustServerCertificate=True"
 ```
 
 Considerando que o projeto é executado dentro de um container, para o endereço do SGDB foi utilizado o IP da máquina host, para o qual o serviço do MSSQL foi mapeado. 
