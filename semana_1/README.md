@@ -35,8 +35,7 @@ O serviço do Cloud Beaver, disponibilizado por padão na porta 8978 do containe
 ```
 docker run --name cloudbeaver --rm -ti -p 8080:8978 \
    -v /home/rafael/data/cloudbeaver:/opt/cloudbeaver/workspace \
-   -d --restart unless-stopped \
-   dbeaver/cloudbeaver:latest
+   -d dbeaver/cloudbeaver:latest
 ```
 
 Para configuração da conexão do Beaver com o MSSQL foi utilizado o IP da maquina host, isto considerando que o dns `localhost` da conteiner do Beaver redireciona para o IP do container, e ainda o IP do host é trocado com menor frequência.
