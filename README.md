@@ -1,4 +1,4 @@
-# Atividades do curso de pós-graduação (Desenvolvimento de Aplicações Móveis)
+# Atividades do curso de pós-graduação (Progrmação Web 2)
 
 Este repositório foi criado com o objetivo de armazenar as atividades realizadas na disciplina de Programação Web II do curso de pós-graduação em Desenvolvimento Web e Mobile.
 
