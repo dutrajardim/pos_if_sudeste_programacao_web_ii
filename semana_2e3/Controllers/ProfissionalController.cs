@@ -45,10 +45,9 @@ namespace semana_2.Controllers
       // inicializa um Set para armazenar os acessos que serão retornados
       HashSet<string> rolesIds = new HashSet<string>();
 
+      // retorna o Set vazio se não tiver retorno de sessão
       if (user == null)
-      {
         return rolesIds;
-      }
 
       // consulta o papel do gestor conectado
       List<string> roles = (List<string>)await _userManager.GetRolesAsync(user);
@@ -150,11 +149,17 @@ namespace semana_2.Controllers
     }
 
     // Get: Profissional/LoggedInEdit
+    /// <summary>
+    ///     Funçao responsável por retornar o formulário de edição profissional
+    ///     especialista conectado
+    /// </summary> 
     [Authorize(Roles = "Nutricionista,Médico")]
     public async Task<IActionResult> LoggedInEdit()
     {
+      // consulta identificador de profissional conectado
       var userid = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new ArgumentNullException("Mandatory parameter user");
 
+      // consulta dados profissionais de usuário conectado
       var tbProfissional = await _context.TbProfissionals.Where(prof => prof.IdUser.Equals(userid)).FirstAsync();
       if (tbProfissional == null)
       {
@@ -165,45 +170,53 @@ namespace semana_2.Controllers
     }
 
     // Post: Profissional/LoggedInEdit
+    /// <summary>
+    ///     Funçao responsável por atualiza os dados do profissional
+    ///     especialista conectado
+    /// </summary> 
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Nutricionista,Médico")]
     public async Task<IActionResult> LoggedInEdit([Bind("IdProfissional,IdTipoProfissional,IdContrato,IdTipoAcesso,IdCidade,Nome,CrmCrn,Especialidade,Logradouro,Numero,Bairro,Cep,Cidade,Estado,Ddd1,Ddd2,Telefone1,Telefone2,Salario")] TbProfissional tbProfissional)
     {
+      // consulta identificador de profissional conectado
       var userid = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new ArgumentNullException("Mandatory parameter user");
 
+      // consulta dados profissionais de usuário conectado
       var profissionalData = await _context.TbProfissionals
         .Where(t => t.IdUser.Equals(userid)).Select(t => new { t.IdProfissional, t.Cpf }).FirstAsync();
 
+      // garante que só dará sequencia se identificador de profissional for
+      // realmento o relacionado ao usuário proprietário da sessão atual
       if (profissionalData.IdProfissional != tbProfissional.IdProfissional)
-      {
         return NotFound();
-      }
 
+      // Remove validação de campos que serão de responsabilidade
+      // do controlador preencher 
       ModelState.Remove("IdUser");
       ModelState.Remove("Cpf");
 
+      // valida os dados
       if (ModelState.IsValid)
       {
         try
         {
+          // preenche os dados que não são permitidos alterar
           tbProfissional.IdUser = userid;
           tbProfissional.Cpf = profissionalData.Cpf;
 
+          // salva os dados de edição
           _context.Update(tbProfissional);
           await _context.SaveChangesAsync();
           return RedirectToAction(nameof(LoggedInDetails));
         }
+        // trata exceções de atualização concorrente
         catch (DbUpdateConcurrencyException)
         {
           if (!TbProfissionalExists(tbProfissional.IdProfissional))
-          {
             return NotFound();
-          }
           else
-          {
             ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-          }
         }
       }
 
@@ -211,16 +224,20 @@ namespace semana_2.Controllers
     }
 
     // GET: Profissional/Details/5
+    /// <summary>
+    ///     Funçao responsável por retornar página com detalhes
+    ///     de profissional cadastrado
+    /// </summary>
     [Authorize(Roles = "Gerente Geral,Gerente Médico,Gerente Nutricionista")]
     public async Task<IActionResult> Details(int? id)
     {
       if (id == null || _context.TbProfissionals == null)
-      {
         return NotFound();
-      }
 
+      // recupara roles para os quais o usuário conectado tem acesso
       HashSet<string> rolesIds = await getRolesAccess();
 
+      // busca o profissional cadastrado
       var tbProfissional = await _context.TbProfissionals
           .Join(_context.Users, t1 => t1.IdUser, t2 => t2.Id, (t1, t2) => new { t1, t2 })
           .Join(_context.UserRoles, users => users.t2.Id, roles => roles.UserId, (users, roles) => new { users, roles })
@@ -232,21 +249,21 @@ namespace semana_2.Controllers
           .FirstOrDefaultAsync(m => m.IdProfissional == id);
 
       if (tbProfissional == null)
-      {
         return NotFound();
-      }
 
       return View(tbProfissional);
     }
 
     // GET: Profissional/Edit/5
+    /// <summary>
+    ///     Função responsável por retornar o formulário de edição
+    ///     de um profissional cadastrado
+    /// </summary>
     [Authorize(Roles = "Gerente Geral,Gerente Médico,Gerente Nutricionista")]
     public async Task<IActionResult> Edit(int? id)
     {
       if (id == null || _context.TbProfissionals == null)
-      {
         return NotFound();
-      }
 
       HashSet<string> rolesIds = await getRolesAccess();
 
@@ -258,9 +275,7 @@ namespace semana_2.Controllers
         .FirstOrDefaultAsync(t => t.IdProfissional.Equals(id));
 
       if (tbProfissional == null)
-      {
         return NotFound();
-      }
 
       return getResult(tbProfissional);
     }
@@ -268,18 +283,22 @@ namespace semana_2.Controllers
     // POST: Profissional/Edit/5
     // To protect from overposting attacks, enable the specific properties you want to bind to.
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    /// <summary>
+    ///     Funçao responsável por atualizar os dados do profissional
+    ///     cadastrado
+    /// </summary>
     [HttpPost]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Gerente Geral,Gerente Médico,Gerente Nutricionista")]
     public async Task<IActionResult> Edit(int id, [Bind("IdProfissional,IdTipoProfissional,IdContrato,IdTipoAcesso,IdCidade,Nome,Cpf,CrmCrn,Especialidade,Logradouro,Numero,Bairro,Cep,Cidade,Estado,Ddd1,Ddd2,Telefone1,Telefone2,Salario")] TbProfissional tbProfissional)
     {
       if (id != tbProfissional.IdProfissional)
-      {
         return NotFound();
-      }
 
+      // recupara roles para os quais o usuário conectado tem acesso
       HashSet<string> rolesIds = await getRolesAccess();
 
+      // verifica papél do profissional para o qual os dados serão editados
       IdentityUserRole<string>? userRole = await _context.Users
         .Join(_context.TbProfissionals, t1 => t1.Id, t2 => t2.IdUser, (t1, t2) => new { t1, t2 })
         .Join(_context.UserRoles, users => users.t1.Id, roles => roles.UserId, (users, roles) => new { users, roles })
@@ -287,18 +306,21 @@ namespace semana_2.Controllers
         .Select(t => t.roles)
         .FirstOrDefaultAsync();
 
-
-      ModelState.Remove("IdUser");
-
+      // interrompe processamento caso papél não foi encontrado
       if (userRole == null)
         return NotFound();
 
+      // verifica se usuário conectado tem acesso ao usuário a ser editado
       if (!rolesIds.Contains(userRole.RoleId))
       {
         ModelState.AddModelError("", "Nível de autorizaçãon insuficiente para remover este profissional.");
         return getResult(tbProfissional);
       }
 
+      // remove campo da validação
+      ModelState.Remove("IdUser");
+
+      // valida dados 
       if (ModelState.IsValid)
       {
         try
@@ -311,13 +333,9 @@ namespace semana_2.Controllers
         catch (DbUpdateConcurrencyException)
         {
           if (!TbProfissionalExists(tbProfissional.IdProfissional))
-          {
             return NotFound();
-          }
           else
-          {
             ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists, see your system administrator.");
-          }
         }
       }
 
@@ -325,14 +343,17 @@ namespace semana_2.Controllers
     }
 
     // GET: Profissional/Delete/5
+    /// <summary>
+    ///     Funçao responsável por retornar página de confirmação
+    ///     de remoção de profissional
+    /// </summary>
     [Authorize(Roles = "Gerente Geral,Gerente Médico,Gerente Nutricionista")]
     public async Task<IActionResult> Delete(int? id)
     {
       if (id == null || _context.TbProfissionals == null)
-      {
         return NotFound();
-      }
 
+      // recupara roles para os quais o usuário conectado tem acesso
       HashSet<string> rolesIds = await getRolesAccess();
 
       var tbProfissional = await _context.TbProfissionals
@@ -345,37 +366,38 @@ namespace semana_2.Controllers
           .Include(t => t.IdTipoAcessoNavigation)
           .FirstOrDefaultAsync(m => m.IdProfissional == id);
 
+      // verifica quantidade de pacientes cadastrados pelo profissional
       int patientsQtd = await countProfessionalPatients((int)id);
 
       ViewData["patientsCount"] = patientsQtd;
 
       if (tbProfissional == null)
-      {
         return NotFound();
-      }
 
       return View(tbProfissional);
     }
 
     // POST: Profissional/Delete/5
+    /// <summary>
+    ///     Funçao responsável por remover um profissional
+    ///     cadastrado e seu usuário de login
+    /// </summary>
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     [Authorize(Roles = "Gerente Geral,Gerente Médico,Gerente Nutricionista")]
     public async Task<IActionResult> DeleteConfirmed(int id)
     {
       if (_context.TbProfissionals == null)
-      {
         return Problem("Entity set 'DbIfContext.TbProfissionals'  is null.");
-      }
 
+      // recupara roles para os quais o usuário conectado tem acesso
       HashSet<string> rolesIds = await getRolesAccess();
 
       int patientsQtd = await countProfessionalPatients((int)id);
 
+      // se profissional possui passientes cadastrados gera umna exceção
       if (patientsQtd > 0)
-      {
         throw new Exception("Não é posssível remover profissional com paciente cadastrado.");
-      }
 
       var userProfissional = await _context.TbProfissionals
         .Join(_context.Users, t1 => t1.IdUser, t2 => t2.Id, (t1, t2) => new { t1, t2 })
@@ -384,6 +406,7 @@ namespace semana_2.Controllers
         .Select(t => t.users)
         .FirstOrDefaultAsync(t => t.t1.IdProfissional.Equals(id));
 
+      // remove dados profissionais e usuário de acesso
       if (userProfissional != null)
       {
         _context.TbProfissionals.Remove(userProfissional.t1);

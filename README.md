@@ -7,10 +7,10 @@ As atividades realizadas serão dispostas com base na estrutura que segue:
 .                       <br />
 ├── semana_1            <br />
 │   └── README.md       <br />
-├── semana_2            <br />
+├── semana_2e3          <br />
 │   └── README.md       <br />
 └── README.md           <br />
 
 Descrição das atividades:
-* [Primaira semana](semana_1/README.md)
-* [Segunda semana](semana_2/README.md)
+* [Primaira atividades](semana_1/README.md)
+* [Segunda e Terceira atividades](semana_2e3/README.md)
