@@ -1,0 +1,98 @@
+@model IEnumerable<semana_2.Models.TbProfissional>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Profissionais</h1>
+
+<div class="table-responsive">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdUser)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cpf)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CrmCrn)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Especialidade)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Logradouro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Numero)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Bairro)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Cep)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Estado)
+                </th>
+                <th>Cidade</th>
+                <th>Plano</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cpf)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CrmCrn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Especialidade)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Logradouro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Numero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Bairro)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cep)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Estado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdCidadeNavigation.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdContratoNavigation.IdPlanoNavigation.Nome)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IdProfissional">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.IdProfissional">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IdProfissional">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

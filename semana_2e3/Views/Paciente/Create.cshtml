@@ -1,0 +1,157 @@
+@model semana_2.Models.TbPaciente
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Cadastro</h1>
+
+<h4>Paciente</h4>
+<hr />
+<div class="row">
+    <div class="col">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-floating mb-3">
+                <input asp-for="Nome" placeholder="Nome" class="form-control" />
+                <label asp-for="Nome"></label>
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Rg" placeholder="Rg" class="form-control" />
+                        <label asp-for="Rg">RG</label>
+                        <span asp-validation-for="Rg" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Cpf" placeholder="Cpf" class="form-control" />
+                        <label asp-for="Cpf">CPF</label>
+                        <span asp-validation-for="Cpf" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="NomeResponsavel" placeholder="NomeResponsavel" class="form-control" />
+                <label asp-for="NomeResponsavel"> Nome do Responsável</label>
+                <span asp-validation-for="NomeResponsavel" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="DataNascimento" class="form-control" />
+                        <label asp-for="DataNascimento">Data de Nascimento</label>
+                        <span asp-validation-for="DataNascimento" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Sexo" placeholder="Sexo" class="form-control" />
+                        <label asp-for="Sexo">Sexo (F/M)</label>
+                        <span asp-validation-for="Sexo" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Profissao" placeholder="Profissao" class="form-control" />
+                        <label asp-for="Profissao"></label>
+                        <span asp-validation-for="Profissao" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="FlgAtleta" placeholder="FlgAtleta" class="form-control" />
+                        <label asp-for="FlgAtleta">Atleta</label>
+                        <span asp-validation-for="FlgAtleta" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="FlgGestante" placeholder="FlgGestante" class="form-control" />
+                        <label asp-for="FlgGestante">Gestante</label>
+                        <span asp-validation-for="FlgGestante" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Etnia" placeholder="Etnia" class="form-control" />
+                        <label asp-for="Etnia"></label>
+                        <span asp-validation-for="Etnia" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <select asp-for="IdCidade" class="form-select" asp-items="ViewBag.IdCidade"></select>
+                        <label asp-for="IdCidade">Cidade</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                        <input asp-for="Bairro" placeholder="Bairro" class="form-control" />
+                        <label asp-for="Bairro"></label>
+                        <span asp-validation-for="Bairro" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-floating mb-3">
+                <input asp-for="Endereco" placeholder="Endereco" class="form-control" />
+                <label asp-for="Endereco">Endereço</label>
+                <span asp-validation-for="Endereco" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="TelResidencial" placeholder="TelResidencial" class="form-control" />
+                        <label asp-for="TelResidencial">Tel Residencial</label>
+                        <span asp-validation-for="TelResidencial" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                        <input asp-for="TelComercial" placeholder="TelComercial" class="form-control" />
+                        <label asp-for="TelComercial">Tel Comercial</label>
+                        <span asp-validation-for="TelComercial" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-floating mb-3">
+                        <input asp-for="TelCelular" placeholder="TelCelular" class="form-control" />
+                        <label asp-for="TelCelular">Tel Celular</label>
+                        <span asp-validation-for="TelCelular" class="text-danger"></span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar</a>
+</div>
+

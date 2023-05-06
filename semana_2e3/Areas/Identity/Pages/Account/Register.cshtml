@@ -1,0 +1,150 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post"
+            asp-route-professional="@ViewBag.isProfessional">
+            @if (ViewBag.isProfessional == "True")
+            {
+                <h2>Cadastrar novo especialista </h2>
+            }
+            else
+            {
+                <h2>Cadastrar novo gestor</h2>
+            }
+
+            <hr />
+            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true"
+                    placeholder="name@example.com" />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true"
+                    placeholder="password" />
+                <label asp-for="Input.Password">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password"
+                    aria-required="true" placeholder="password" />
+                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            @if (ViewBag.isProfessional == "True")
+            {
+                <hr />
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Nome" class="form-control" placeholder="nome" />
+                            <label asp-for="TbProfissional.Nome">Nome</label>
+                            <span asp-validation-for="TbProfissional.Nome" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select asp-for="Role.Name" class="form-select" asp-items="ViewBag.Role"></select>
+                            <label asp-for="Role.Name">Função</label>
+                            <span asp-validation-for="Role.Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select asp-for="TbContrato.IdPlano" class="form-select" asp-items="ViewBag.IdPlano"></select>
+                            <label asp-for="TbContrato.IdPlano">Plano</label>
+                            <span asp-validation-for="TbContrato.IdPlano" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select asp-for="TbProfissional.IdTipoAcesso" class="form-select"
+                            asp-items="ViewBag.IdTipoAcesso"></select>
+                            <label asp-for="TbProfissional.IdTipoAcesso">Tipo de acesso</label>
+                            <span asp-validation-for="TbProfissional.IdTipoAcesso" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Cpf" placeholder="CPF" class="form-control" />
+                            <label asp-for="TbProfissional.Cpf" class="control-label">CPF</label>
+                            <span asp-validation-for="TbProfissional.Cpf" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.CrmCrn" placeholder="Crm / Crn" class="form-control" />
+                            <label asp-for="TbProfissional.CrmCrn" class="control-label">CRM / CRN</label>
+                            <span asp-validation-for="TbProfissional.CrmCrn" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Especialidade" placeholder="Especialidade"
+                                class="form-control" />
+                            <label asp-for="TbProfissional.Especialidade" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Especialidade" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <select asp-for="TbProfissional.IdCidade" class="form-select"
+                            asp-items="ViewBag.IdCidade"></select>
+                            <label asp-for="TbProfissional.IdCidade">Cidade</label>
+                            <span asp-validation-for="TbProfissional.IdCidade" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Logradouro" placeholder="Logradouro" class="form-control" />
+                            <label asp-for="TbProfissional.Logradouro" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Logradouro" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Numero" placeholder="Numero" class="form-control" />
+                            <label asp-for="TbProfissional.Numero" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Numero" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Bairro" placeholder="Bairro" class="form-control" />
+                            <label asp-for="TbProfissional.Bairro" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Bairro" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Cep" placeholder="Cep" class="form-control" />
+                            <label asp-for="TbProfissional.Cep" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Cep" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Estado" placeholder="Estado" class="form-control" />
+                            <label asp-for="TbProfissional.Estado" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Estado" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Ddd1" placeholder="Ddd1" class="form-control" />
+                            <label asp-for="TbProfissional.Ddd1" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Ddd1" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Ddd2" placeholder="Ddd2" class="form-control" />
+                            <label asp-for="TbProfissional.Ddd2" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Ddd2" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Telefone1" placeholder="Telefone1" class="form-control" />
+                            <label asp-for="TbProfissional.Telefone1" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Telefone1" class="text-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input asp-for="TbProfissional.Telefone2" placeholder="Telefone2" class="form-control" />
+                            <label asp-for="TbProfissional.Telefone2" class="control-label"></label>
+                            <span asp-validation-for="TbProfissional.Telefone2" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Registrar</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

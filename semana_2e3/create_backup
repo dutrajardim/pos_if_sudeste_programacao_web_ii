@@ -1,0 +1,50 @@
+// GET: Profissional/Create
+    // [Authorize(Roles = "Gerente Geral,Gerente Médico,Gerente Nutricionista")]
+    // public IActionResult Create()
+    // {
+    //   ViewData["IdCidade"] = new SelectList(_context.TbCidades, "IdCidade", "Nome");
+    //   ViewData["IdPlano"] = new SelectList(_context.TbPlanos, "IdPlano", "Nome");
+    //   ViewData["IdTipoAcesso"] = new SelectList(_context.TbTipoAcessos, "IdTipoAcesso", "Nome");
+
+    //   return View();
+    // }
+
+    // POST: Profissional/Create
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    // [HttpPost]
+    // [ValidateAntiForgeryToken]
+    // [Authorize(Roles = "Gerente Geral,Gerente Médico,Gerente Nutricionista")]
+    // // public async Task<IActionResult> Create(System.ValueTuple<TbProfissional, TbContrato> model)
+    // public async Task<IActionResult> Create([Bind("IdProfissional,IdTipoProfissional,IdTipoAcesso,IdCidade,Nome,Cpf,CrmCrn,Especialidade,Logradouro,Numero,Bairro,Cep,Estado,Ddd1,Ddd2,Telefone1,Telefone2,Salario")] TbProfissional tbProfissional)
+    // {
+
+    //   ModelState.Remove("IdUser");
+    //   ModelState.Remove("IdContratoNavigation");
+    //   ModelState.Remove("IdCidadeNavigation");
+
+    //   if (ModelState.IsValid)
+    //   {
+    //     tbProfissional.IdUser = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? throw new ArgumentNullException("Mandatory parameter user");
+    //     // Contrato
+    //     TbContrato contrato = new TbContrato();
+    //     contrato.DataInicio = DateTime.UtcNow;
+    //     contrato.DataFim = contrato.DataInicio.Value.AddMonths(1);
+    //     // contrato.IdPlano = tbProfissional.IdPlano;
+    //     _context.Add(contrato);
+    //     await _context.SaveChangesAsync();
+
+    //     // Profissional
+    //     tbProfissional.IdContrato = contrato.IdContrato;
+    //     _context.Add(tbProfissional);
+    //     await _context.SaveChangesAsync();
+
+    //     return RedirectToAction(nameof(Index));
+    //   }
+
+    //   ViewData["IdCidade"] = new SelectList(_context.TbCidades, "IdCidade", "Nome", tbProfissional.IdCidade);
+    //   // ViewData["IdPlano"] = new SelectList(_context.TbPlanos, "IdPlano", "Nome", tbProfissional.IdPlano);
+    //   ViewData["IdTipoAcesso"] = new SelectList(_context.TbTipoAcessos, "IdTipoAcesso", "Nome", tbProfissional.IdTipoAcesso);
+
+    //   return View(tbProfissional);
+    // }
